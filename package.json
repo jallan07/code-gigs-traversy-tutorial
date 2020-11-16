@@ -1,0 +1,25 @@
+{
+	"name": "sequelize-tutorial",
+	"version": "1.0.0",
+	"description": "Video URL: https://www.youtube.com/watch?v=pxo7L5nd1gA",
+	"main": "index.js",
+	"scripts": {
+		"start": "node app.js",
+		"dev": "nodemon app.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"body-parser": "^1.19.0",
+		"express": "^4.17.1",
+		"express-handlebars": "^5.2.0",
+		"mysql": "^2.18.1",
+		"mysql2": "^2.2.5",
+		"path": "^0.12.7",
+		"sequelize": "^6.3.5"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.6"
+	}
+}
