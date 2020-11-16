@@ -6,8 +6,8 @@ For this project, I followed along with Traversy Media's 3-part Sequelize tutori
 
 ## Videos
 
-Video 1: https://www.youtube.com/watch?v=bOHysWYMZM0
-Video 2: https://www.youtube.com/watch?v=67OhLlFPqFQ
+- Video 1: https://www.youtube.com/watch?v=bOHysWYMZM0
+- Video 2: https://www.youtube.com/watch?v=67OhLlFPqFQ
 
 ## Areas of Focus
 
