@@ -1,20 +1,37 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../config/database");
-const Gig = require("../models/Gig");
+const db = require("../config/database.js");
+const Gig = require("../models/Gig.js");
 
 // get gig list
 router.get("/", function (req, res) {
 	Gig.findAll()
 		.then((gigs) => {
-			console.log(gigs);
-			res.sendStatus(200);
+			const context = {
+				contextGigs: gigs.map((gig) => {
+					return {
+						title: gig.title,
+						technology: gig.technology,
+						budget: gig.budget,
+						description: gig.description,
+						contact_email: gig.contact_email,
+					};
+				}),
+			};
+			res.render("gigs", {
+				gigs: context.contextGigs,
+			});
 		})
 		.catch((err) => console.log(err));
 });
 
-// route to add a gig
+// display add gig form
 router.get("/add", (req, res) => {
+	res.render("add");
+});
+
+// route to add a gig
+router.post("/add", (req, res) => {
 	const data = {
 		title: "Simple Wordpress website",
 		technologies: "Wordpress, php, html, css",
@@ -28,11 +45,11 @@ router.get("/add", (req, res) => {
 
 	// insert into table
 	Gig.create({
-		title,
-		technologies,
-		description,
-		budget,
-		contact_email,
+		title: title,
+		technologies: technologies,
+		description: description,
+		budget: budget,
+		contact_email: contact_email,
 	})
 		.then((gig) => res.redirect("/gigs"))
 		.catch((err) => console.log(err));

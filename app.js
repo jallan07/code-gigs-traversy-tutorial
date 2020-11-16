@@ -13,8 +13,16 @@ db.authenticate()
 
 const app = express();
 
+// handlebars
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
+// set static folder
+app.use(express.static(path.join(__dirname, "public")));
+
+// index route
 app.get("/", function (req, res) {
-	res.send("INDEX");
+	res.render("index", { layout: "landing" });
 });
 
 // Gig routes
