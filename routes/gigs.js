@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const db = require("../config/database.js");
 const Gig = require("../models/Gig.js");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 // get gig list
 router.get("/", function (req, res) {
@@ -83,6 +85,38 @@ router.post("/add", (req, res) => {
 			.then((gig) => res.redirect("/gigs"))
 			.catch((err) => console.log(err));
 	}
+});
+
+// search for gigs
+router.get("/search", (req, res) => {
+	let { term } = req.query;
+	// make the search term lowercase
+	term = term.toLowerCase();
+	// find all matches within the technologies column that contain the term
+	Gig.findAll({
+		where: {
+			technologies: {
+				[Op.like]: "%" + term + "%",
+			},
+		},
+	})
+		.then((gigs) => {
+			const context = {
+				contextGigs: gigs.map((gig) => {
+					return {
+						title: gig.title,
+						technologies: gig.technologies,
+						budget: gig.budget,
+						description: gig.description,
+						contact_email: gig.contact_email,
+					};
+				}),
+			};
+			res.render("gigs", {
+				gigs: context.contextGigs,
+			});
+		})
+		.catch((err) => console.log(err));
 });
 
 module.exports = router;
